@@ -1,0 +1,71 @@
+/*************************************************************************
+    > File Name: poj3268.cpp
+    > Author: chendi
+    > Mail: chendi1995@sohu.com 
+    > The compiler environment:vim + gcc
+    > Created Time: 2015年03月26日 星期四 17时33分26秒
+ ************************************************************************/
+#include<iostream>
+#include<stdlib.h>
+#include<string.h>
+#include<stdio.h>
+#define MAXVEX 1010
+#define INF 1000000
+
+using namespace std;
+int map[MAXVEX][MAXVEX];
+int visited[MAXVEX];
+int N,M,X;
+int dist[MAXVEX][MAXVEX];
+int redist[MAXVEX][MAXVEX];
+
+int  dijkstra(int start)
+{
+	int i,j,k,mindist;
+	memset(visited,0,sizeof(visited));
+	memset(dist,0,sizeof(dist));
+	for(i=1;i<=N;i++)
+		dist[start][i]=map[start][i];
+	visited[start]=1;
+	dist[start]=0;
+	for(i=1;i<=N;i++)
+	{
+		mindist=INF;
+		k=start;
+		for(j=1;j<=N;j++)
+			if(!visited[j] && dist[start][j]<mindist)
+			{
+				k=j;
+				mindist=dist[start][j];
+			}
+		visited[k]=1;
+		for(j=1;j<=N;j++)
+			if(!visited[j] && map[k][j]<INF &&map[k][j]+dist[start][k]<dist[start][j])
+				dist[start][j]=map[k][j]+dist[start][k];
+	}
+
+}
+
+int main()
+{
+	int i;
+	int max=0;
+	int sum;
+	int a,b,c;
+	cin >> N >> M >> X;
+	memset(map,INF,sizeof(map));
+	for(i=1;i<=M;i++)
+	{
+		cin >> a >> b >>c;
+		map[a][b]=c;
+	}
+	dijstra(X);
+	for(i=1;i<=M;i++)
+		for(j=1;j<=M;j++)
+		{
+			map[i][j]=map[j][i];
+			map[j][i]=INF;
+		}
+	dijstra
+	cout << max <<endl;
+}

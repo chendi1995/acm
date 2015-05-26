@@ -1,0 +1,49 @@
+/*************************************************************************
+    > File Name: poj2236.cpp
+    > Author: chendi
+    > Mail: chendi1995@sohu.com 
+    > The compiler environment:vim + gcc
+    > Created Time: 2015年03月31日 星期二 20时23分33秒
+ ************************************************************************/
+#include<iostream>
+#include<stdio.h>
+using namespace std;
+#define MAXNODE 1500
+
+int pre[MAXNODE];
+int x[MAXNODE],y[MAXNODE];
+int repair[MAXNODE];
+
+float dis(int i,int j)
+{
+	return sqrt((x[i]-x[j])*(x[i]-x[j])+(y[i]-y[j])(y[i]-y[j]));
+}
+
+
+
+int main()
+{
+	int N,d;
+	int i;
+	char ch;
+	int a,b;
+	cin >> N >> d;
+	for(i=1;i<=N;i++)
+		cin >> x[i] >> y[i];
+	while(~scanf("%c",&ch))
+	{
+		if(ch=='O')
+		{
+			scanf("%d",&a);
+			repair[a]=1;
+			for(i=1;i<=N;i++)
+				if(repair[i] && a!=i && dis(a,i)<=d)
+					join(a,i);
+		}
+		if(ch=='S')
+		{
+			scanf("%d%d",&a,&b);
+			judge(a,b);
+		}
+	}
+}
